@@ -5,9 +5,9 @@ const UserItem = ({user}) => {
     return (
         <tr>
             <td>{user.username}</td>
-            <td>{user.username}</td>
-            <td>{user.username}</td>
-            <td>{user.username}</td>
+            <td>{user.first_name}</td>
+            <td>{user.last_name}</td>
+            <td>{user.email}</td>
         </tr>
     )
 }
@@ -21,7 +21,7 @@ const UserList = ({users}) => {
                 <th>Last Name</th>
                 <th>Email</th>
             </tr>
-                {users.map((user) => <UserItem user={user} />)}
+            {users.map((user) => <UserItem user={user} />)}
         </table>
     )
 }
