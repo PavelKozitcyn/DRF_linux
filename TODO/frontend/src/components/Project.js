@@ -36,7 +36,7 @@ const ProjectUserItem = ({item}) => {
     return (
         <li>
         {item.username} ({item.email})
-    </li>
+      </li>
     )
 }
 
