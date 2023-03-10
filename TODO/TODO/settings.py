@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
     'drf_yasg',
+    'graphene_django',
     # my
     'usersapp',
     'todoapp'
@@ -163,7 +164,8 @@ REST_FRAMEWORK = {
     # 'PAGE_SIZE': 100
 
 }
-
+# GraphQl
+GRAPHENE = {"SCHEMA": "TODO.schema.schema"}
 # CORS
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
