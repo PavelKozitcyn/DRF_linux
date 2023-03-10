@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 
 
-const ProjectListItem = ({item}) => {
+const ProjectListItem = ({item, deleteProject}) => {
     let link_to = `/project/${item.id}`
     return (
         <tr>
@@ -13,30 +13,36 @@ const ProjectListItem = ({item}) => {
             <td>{item.name}</td>
             <td>{item.repository}</td>
             <td><Link to={link_to}>Detail</Link></td>
+            <td>
+                <button onClick={() => deleteProject(item.id)} type='button'>Delete</button>
+            </td>
         </tr>
     )
 }
 
-const ProjectList = ({items}) => {
+const ProjectList = ({items, deleteProject}) => {
     //console.log(users)
     return (
-        <table className="table">
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Repository</th>
-                <th></th>
-            </tr>
-            {items.map((item) => <ProjectListItem item={item} />)}
-        </table>
+        <div>
+            <table className="table">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Repository</th>
+                    <th></th>
+                </tr>
+                {items.map((item) => <ProjectListItem item={item} deleteProject={deleteProject}/>)}
+            </table>
+            <Link to='/projects/create'>Create</Link>
+        </div>
     )
 }
 
 const ProjectUserItem = ({item}) => {
     return (
         <li>
-        {item.username} ({item.email})
-      </li>
+            {item.username} ({item.email})
+        </li>
     )
 }
 
@@ -52,7 +58,7 @@ const ProjectDetail = ({getProject, item}) => {
             <p></p>
             Users:
             <ol>
-            {users.map((user) => <ProjectUserItem item={user} />)}
+                {users.map((user) => <ProjectUserItem item={user} />)}
             </ol>
         </div>
     )
