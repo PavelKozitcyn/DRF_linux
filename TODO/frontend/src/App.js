@@ -40,7 +40,7 @@ class App extends React.Component {
 
     deleteTodo(id) {
         const headers = this.get_headers()
-        axios.delete(`http://127.0.0.1:8000/api/todos/${id}`, {headers})
+        axios.delete(`get_url('todos/')${id}`, {headers})
             .then(response => {
                 this.setState({
                     todos: this.state.todos.filter((item) => item.id !== id)
@@ -51,7 +51,7 @@ class App extends React.Component {
     createTodo(name, project) {
         const headers = this.get_headers()
         const data = {name: name, project: project}
-        axios.post(`http://127.0.0.1:8000/api/todos/`, data, {headers})
+        axios.post(get_url('todos/'), data, {headers})
             .then(response => {
                 let new_todo = response.data
                 const project = this.state.projects.filter((item) => item.id ===
@@ -62,7 +62,7 @@ class App extends React.Component {
     }
     deleteProject(id) {
         const headers = this.get_headers()
-        axios.delete(`http://127.0.0.1:8013/api/projects/${id}`, {headers})
+        axios.delete(`get_url('projects/')${id}`, {headers})
             .then(response => {
                 this.setState({
                     projects: this.state.projects.filter((item) => item.id !== id)
@@ -72,7 +72,7 @@ class App extends React.Component {
     createProject(name, user) {
         const headers = this.get_headers()
         const data = {name: name, user: user}
-        axios.post(`http://127.0.0.1:8013/api/projects/`, data, {headers})
+        axios.post(`get_url('projects/')`, data, {headers})
             .then(response => {
                 let new_project = response.data
                 const user = this.state.users.filter((item) => item.id ===
@@ -122,7 +122,7 @@ class App extends React.Component {
 
         axios.get(get_url('users/'), {headers})
             .then(response => {
-                //console.log(response.data)
+                // console.log(response.data)
                 this.setState({users: response.data})
             }).catch(error =>
 
@@ -165,11 +165,11 @@ class App extends React.Component {
                    <div className="container">
                         <Routes>
                             <Route exact path='/' element={<UserList users={this.state.users} />} />
-                            <Route exact path='projects' element={<ProjectList  items={this.state.projects} />} />
+                            <Route exact path='project' element={<ProjectList  items={this.state.projects} />} />
+                            <Route exact path='/projects/:id' element={<ProjectDetail getProject={(id) => this.getProject(id)}
+                                                                                item={this.state.project} />} />
                             <Route exact path='/projects/create' element={<ProjectForm users={this.state.users} createProject={(name, user) =>
                                    this.createProject(name, user)}/>}/>
-                            <Route exact path='/project/:id' element={<ProjectDetail getProject={(id) => this.getProject(id)}
-                                                                                item={this.state.project} />} />
                             <Route exact path='/todos' element={<ToDoList items={this.state.todos} deleteTodo={(id) => this.deleteTodo(id)}/>} />
                             <Route exact path='/todo/create' element={<TodoForm projects={this.state.projects} createTodo={(name, project) =>
                                    this.createTodo(name, project)}/>}/>
