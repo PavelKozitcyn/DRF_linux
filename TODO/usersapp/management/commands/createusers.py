@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from DRF_linux.TODO.usersapp.models import CustomUser
+from usersapp.models import CustomUser
 
 
 
@@ -11,13 +11,13 @@ class Command(BaseCommand):
         parser.add_argument('count', type=int)
 
     def handle(self, *args, **options):
-        # Удаляем все пользоватлелей
+        # Удаляем пользоватлелей
         CustomUser.objects.all().delete()
         user_count = options['count']
         # Создаем суперпользователя
-        CustomUser.objects.create_superuser('leo', 'leo@test.com', 'dante123456')
+        CustomUser.objects.create_superuser('paul', 'Paul', 'Kozic',  'paul11@fuck.com')
         # Создаем тестовых пользователей
         for i in range(user_count):
-            CustomUser.objects.create_user(f'user{i}', f'user{i}@test.com', 'dante123456')
+            CustomUser.objects.create_user(f'user{i}', f'user{i}', f'user{i}', f'user{i}@test.com')
 
         print('done')
