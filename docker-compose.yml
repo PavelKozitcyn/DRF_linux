@@ -1,0 +1,39 @@
+
+version: '3.1'
+
+services:
+  db:
+    image: postgres:13.1
+    privileged: true
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: dante
+      POSTGRES_PASSWORD: dante123
+      POSTGRES_DB: db
+  backend:
+    build:
+      context: ./TODO
+    privileged: true
+    restart: always
+    expose:
+      - 8010
+    depends_on:
+      - db
+    command: bash -c "
+      python manage.py migrate &&
+      gunicorn TODO.wsgi -b 0.0.0.0:8010
+      "
+  nginx:
+    build: ./nginx
+    ports:
+      - 8888:80
+    depends_on:
+      - backend
+  frontend:
+    build: ./frontend
+    ports:
+      - 80:80
+    depends_on:
+      - nginx
